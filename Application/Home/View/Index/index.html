@@ -10,13 +10,7 @@
 </head>
 
 <body>
-    <div class="container" id="header">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="logo"><img src="./Public/images/logo.jpg" alt=""></div>
-            </div>
-        </div>
-    </div>
+    <include file="Public/header" />
     <div class="container">
         <div class="row">
             <div class="col-md-9">
@@ -27,7 +21,7 @@
 						        <img src="./Public/images/lc1.jpg" class="img-responsive">
 						        <div class="caption">
 						        	<p></p>
-						            <p><a href="{:U('User/reg')}" class="btn btn-default  btn-block " role="button">立即登记</a></p>
+						            <p><a href="{:U('Public/reg')}" class="btn btn-default  btn-block " role="button">立即登记</a></p>
 						        </div>
 						    </div>
 						</div>
@@ -66,11 +60,8 @@
             </div>
         </div>
     </div>
-    <div class="container footer" >
-    	<div class="row">
-    		华中农业大学党委宣传部 Powerby {we}studio
-    	</div>
-    </div>
+    <include file="Public/footer" />
+
 </body>
 <script src="./Public/js/bootstrap.min.js"></script>
 
