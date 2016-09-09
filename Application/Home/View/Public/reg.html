@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>华中农业大学党委宣传部/新闻中心备案系统</title>
+    <link rel="stylesheet" href="./Public/css/bootstrap.css">
+    <link rel="stylesheet" href="./Public/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="./Public/css/home.css">
+</head>
+
+<body>
+    <include file="Public/header" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <form action="" class="form-horizontal">
+                    <fieldset>
+                        <div id="legend" class="">
+                            <legend class="">登记基础信息</legend>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="name">姓名</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="请输入姓名" class="form-control" name="name" id="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="ecard">一卡通号</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="一卡通号" class="form-control" name="ecard" id="ecard">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="mobile">手机号</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="手机号" class="form-control" name="mobile" id="mobile">
+                            </div>
+                            <div class="col-sm-4">
+                            <button class="btn btn-default" onclick="SetCode(true);">发送验证码</button>
+                            
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="verify" class="control-label col-sm-2" >验证码</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="查看手机短信" class="form-control" name="veify" id="veify" >
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+            <div class="col-md-3">
+                <p>成员登陆</p>
+                <p>备案须知</p>
+                <ul>
+                    <li>请在9月25日以前完成线上备案</li>
+                    <li>请准备一张登记照电子版</li>
+                    <li>用户敏感信息会加密保存</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <include file="Public/footer" />
+</body>
+<script src="./Public/js/jquery.min.js"></script>
+<script src="./Public/js/bootstrap.min.js"></script>
+<script>
+function SetCode(n) {
+    if ($('#mobile').length = 11) {
+        if (n)
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "ajax.aspx?oper=telpcode&clienttime=" + (new Date().getTime()),
+                data: "txtMobileCode=" + $("#txtMobileCode").val(),
+                success: function(d) {
+                    if (d.result == "1") {
+                        alert("验证码发送成功");
+                        GetNumber();
+                        return true;
+                    } else {
+                        alert("验证码发送失败");
+                        return false;
+                    }
+                }
+            });
+        else {}
+    } else {}
+}
+var count = 5;
+
+function GetNumber() {
+    $("#btnCode").attr("disabled", "disabled");
+    $("#btnCode").val(count + "秒之后点击获取")
+    count--;
+    if (count > 0) {
+        setTimeout(GetNumber, 1000);
+    } else {
+        $("#btnCode").val("点击获取验证码");
+        $("#btnCode").attr("disabled", "");
+        count = 5;
+    }
+}
+</script>
+
+</html>
