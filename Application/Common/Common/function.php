@@ -1,4 +1,10 @@
 <?php 
+// 美化打印数组 调试用
+function p($data){
+    print "<pre>\n";
+    print_r($data);
+    print "\n</pre>";
+}
 
 /**
  * 发送 容联云通讯 验证码
@@ -35,4 +41,9 @@ function send_sms_code($phone,$code){
         return true;
     }
 }
+
+function getMd5Password($password){
+    return md5($password.C('MD5_PRE'));
+}
+
 ?>
