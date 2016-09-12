@@ -46,4 +46,49 @@ function getMd5Password($password){
     return md5($password.C('MD5_PRE'));
 }
 
+function checkRepeatUser($ecard = ''){
+    if($ecard == ''){
+        return false;
+    }
+    $data['ecard']=$ecard;
+    $result = M('User')->where($data)->find();
+    if($result){
+        return false;
+    }else{
+        return ture;
+    }
+}
+
+function getChildDepartment($pid=''){
+    if(!isset($pid)||empty($pid)){
+        return false;
+    }
+    $data['pid'] = $pid;
+    return M('Group')->where($data)->select();
+}
+
+function checkVerify($cond = array()){
+    if(!isset($_SESSION['hzauUser'])||empty($_SESSION['hzauUser'])){
+        return 0;
+    }
+    $userVerify = json_decode($_SESSION['hzauUser']['verify']);
+    foreach ($cond as $key => $value) {
+        if($userVerify->$value)
+            {
+                echo $value.'已经验证<br>';
+            }else{
+                echo $value."未验证<br>";
+        }
+    }
+    p($userVerify);
+}
+
+function getGroupInfo($gid = ''){
+    if(!isset($gid)||empty($gid)){
+        return false;
+    }
+    $map['gid']=$gid;
+    return M('Group')->where($map)->find();
+}
+
 ?>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>华中农业大学党委宣传部/新闻中心备案系统</title>
+    <link rel="stylesheet" href="./Public/css/bootstrap.css">
+    <link rel="stylesheet" href="./Public/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="./Public/css/home.css">
+</head>
+
+<body>
+    <include file="Public/header" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <form action="" class="form-horizontal" method="POST">
+                    <fieldset>
+                        <div id="legend" class="">
+                            <legend class="">团队注册</legend>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="dep">部门</label>
+                            <div class="col-sm-4">
+                            <select class="form-control" name="dep" id="dep">
+                                <option value="">请选择团队所属部门</option>
+                                <volist name="dep" id="vo">
+                                    <option value="{$vo.gid}">{$vo.name}</option>
+                                </volist>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="ecard">职务</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="一卡通号" class="form-control" name="ecard" id="ecard" value="1234">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="mobile">工作内容</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="手机号" class="form-control" name="mobile" id="mobile" value="8978">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="control-label col-sm-2" >入职时间</label>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="请输入密码" class="form-control" name="password" id="password" value="888888">
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">注册</button><a href="/cal/index.php?m=User&amp;c=Public&amp;a=index" class="btn">已经有账号了？立即登陆！</a>
+                        </div>
+                        <div style="padding-bottom: 50px;"></div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+            <div class="col-md-3">
+                <p>成员登陆</p>
+                <p>备案须知</p>
+                <ul>
+                    <li>请在9月25日以前完成线上备案</li>
+                    <li>请准备一张登记照电子版</li>
+                    <li>用户敏感信息会加密保存</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <include file="Public/footer" />
+</body>
+<script src="./Public/js/jquery.min.js"></script>
+<script src="./Public/js/bootstrap.min.js"></script>
+<script>
+function SetCode(n) {
+    if ($('#mobile').length = 11) {
+        if (n)
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "ajax.aspx?oper=telpcode&clienttime=" + (new Date().getTime()),
+                data: "txtMobileCode=" + $("#txtMobileCode").val(),
+                success: function(d) {
+                    if (d.result == "1") {
+                        alert("验证码发送成功");
+                        GetNumber();
+                        return true;
+                    } else {
+                        alert("验证码发送失败");
+                        return false;
+                    }
+                }
+            });
+        else {}
+    } else {}
+}
+var count = 5;
+
+function GetNumber() {
+    $("#btnCode").attr("disabled", "disabled");
+    $("#btnCode").val(count + "秒之后点击获取")
+    count--;
+    if (count > 0) {
+        setTimeout(GetNumber, 1000);
+    } else {
+        $("#btnCode").val("点击获取验证码");
+        $("#btnCode").attr("disabled", "");
+        count = 5;
+    }
+}
+</script>
+
+</html>
